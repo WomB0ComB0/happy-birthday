@@ -1,113 +1,151 @@
+"use client"
 import Image from "next/image";
-
+import { useEffect, useState } from "react";
+import { ParticlesContainer } from "@/components/Confetti";
+import { AuroraBackground } from "@/components/ui/aurora-background";
+import { motion } from "framer-motion";
+import { toast } from "sonner";
 export default function Home() {
+  const [isBirthday, setIsBirthday] = useState(false);
+  const [mounted, setMounted] = useState(false)
+  const isBirthdayToday = (): boolean => {
+    const today = new Date();
+    return today.getMonth() === 2 && today.getDate() === 24;
+  }
+  useEffect(() => {
+    setIsBirthday(isBirthdayToday());
+    setMounted(true);
+    isBirthday && toast("🥳 Today's my Birthday! 🎉");
+  }, [isBirthday]);
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-full sm:before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full sm:after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50 text-balance`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
+    <main
+    >
+      {mounted ? (
+        <>
+          {
+            isBirthday && (
+              <ParticlesContainer />
+            )
+          }
+          <AuroraBackground>
+            <motion.article
+              initial={{ opacity: 0.0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{
+                delay: 0.3,
+                duration: 0.8,
+                ease: "easeInOut",
+              }}
+              className="relative flex flex-col gap-4 items-center justify-center text-white prose max-w-screen-xl px-2.5 md:px-20 "
+            >
+              <picture
+                className={`
+                  relative
+                  rounded-full
+                  overflow-hidden
+                  w-60 h-60
+                `}
+              >
+                <Image
+                  src="/Mike_Odnis.jpg"
+                  alt="Mike Odnis"
+                  className={`
+                    rounded-full shadow-lg
+                    object-cover object-center
+                    w-20 h-20 select-none pointer-events-none
+                    `}
+                    layout={`fill`}
+                    fetchPriority={`high`}
+                    quality={100}
+                    loading={`eager`}
+                  />
+              </picture>
+              <Countdown />
+              <CurrentAge />
+            </motion.article>
+          </AuroraBackground>
+        </>
+      ) : null}
     </main>
   );
+}
+
+
+const CurrentAge = () => {
+  const diffCalc = () => {
+    const diff =
+      (new Date().getTime() - new Date("March 24, 2004").getTime()) /
+      1000 /
+      60 /
+      60 /
+      24 /
+      365;
+    return diff.toFixed(5);
+  };
+  const [age, setAge] = useState(diffCalc());
+  setInterval(() => {
+    setAge(diffCalc());
+  }, 10);
+
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  return (
+    <>
+      {mounted && (
+        <p
+          className={`
+            text-center text-lg
+          `}
+        >
+          Current age (years): <span className={`font-bold`}>{age}</span>
+        </p>
+      )}
+    </>
+  )
+}
+
+const Countdown = () => {
+  const diffCalc = () => {
+    const nextYear = new Date().getFullYear() + 1;
+    const diff =
+      (new Date(`March 24, ${nextYear}`).getTime() - new Date().getTime()) /
+      1000 /
+      60 /
+      60 /
+      24;
+    return {
+      days: Math.floor(diff),
+      hours: Math.floor((diff % 1) * 24),
+      minutes: Math.floor(((diff % 1) * 24) % 1 * 60),
+      seconds: Math.floor((((diff % 1) * 24) % 1 * 60) % 1 * 60),
+    };
+  };
+  const [time, setTime] = useState(diffCalc());
+  setInterval(() => {
+    setTime(diffCalc());
+  }, 10);
+
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  return (
+    <>
+      {mounted && (
+        <h1
+          className={`
+            text-2xl text-center
+          `}
+        >
+          Countdown to my next birthday: <span className={`font-bold`}>{time.days}</span> days, <span className={`font-bold`}>{time.hours}</span> hours, <span className={`font-bold`}>{time.minutes}</span> minutes, <span className={`font-bold`}>{time.seconds}</span> seconds
+        </h1>
+      )}
+    </>
+  )
 }
