@@ -15,8 +15,10 @@ export default function Home() {
   useEffect(() => {
     setIsBirthday(isBirthdayToday());
     setMounted(true);
-    isBirthday && toast("🥳 Today's my Birthday! 🎉");
-  }, [isBirthday]);
+    if (isBirthdayToday()) {
+      toast("🥳 Today's my Birthday! 🎉");
+    }
+  }, []);
   return (
     <main
     >
@@ -52,13 +54,13 @@ export default function Home() {
                   className={`
                     rounded-full shadow-lg
                     object-cover object-center
-                    w-20 h-20 select-none pointer-events-none
-                    `}
-                    layout={`fill`}
-                    fetchPriority={`high`}
-                    quality={100}
-                    loading={`eager`}
-                  />
+                    w-full h-full select-none pointer-events-none
+                  `}
+                  layout={`fill`}
+                  fetchPriority={`high`}
+                  quality={100}
+                  loading={`eager`}
+                />
               </picture>
               <Countdown />
               <CurrentAge />
@@ -83,9 +85,12 @@ const CurrentAge = () => {
     return diff.toFixed(5);
   };
   const [age, setAge] = useState(diffCalc());
-  setInterval(() => {
-    setAge(diffCalc());
-  }, 10);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setAge(diffCalc());
+    }, 10);
+    return () => clearInterval(interval);
+  }, []);
 
   const [mounted, setMounted] = useState(false);
 
@@ -110,13 +115,19 @@ const CurrentAge = () => {
 
 const Countdown = () => {
   const diffCalc = () => {
-    const nextYear = new Date().getFullYear() + 1;
+    const today = new Date();
+    const currentYear = today.getFullYear();
+    const nextBirthdayYear = today.getMonth() > 2 || (today.getMonth() === 2 && today.getDate() > 24)
+      ? currentYear + 1
+      : currentYear;
+
     const diff =
-      (new Date(`March 24, ${nextYear}`).getTime() - new Date().getTime()) /
+      (new Date(`March 24, ${nextBirthdayYear}`).getTime() - today.getTime()) /
       1000 /
       60 /
       60 /
       24;
+
     return {
       days: Math.floor(diff),
       hours: Math.floor((diff % 1) * 24),
@@ -125,9 +136,12 @@ const Countdown = () => {
     };
   };
   const [time, setTime] = useState(diffCalc());
-  setInterval(() => {
-    setTime(diffCalc());
-  }, 10);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTime(diffCalc());
+    }, 10);
+    return () => clearInterval(interval);
+  }, []);
 
   const [mounted, setMounted] = useState(false);
 
