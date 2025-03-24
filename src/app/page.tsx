@@ -81,7 +81,8 @@ const CurrentAge = () => {
       60 /
       60 /
       24 /
-      365;
+      365.25;
+      
     return diff.toFixed(5);
   };
   const [age, setAge] = useState(diffCalc());
