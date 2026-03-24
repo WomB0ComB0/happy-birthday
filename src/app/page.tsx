@@ -49,7 +49,7 @@ export default function Home() {
                 `}
               >
                 <Image
-                  src="/Mike_Odnis.jpg"
+                  src="https://github.com/WomB0ComB0.png"
                   alt="Mike Odnis"
                   className={`
                     rounded-full shadow-lg
