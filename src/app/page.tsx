@@ -3,7 +3,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { ParticlesContainer } from "@/components/Confetti";
 import { AuroraBackground } from "@/components/ui/aurora-background";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { toast } from "sonner";
 export default function Home() {
   const [isBirthday, setIsBirthday] = useState(false);
@@ -56,10 +56,9 @@ export default function Home() {
                     object-cover object-center
                     w-full h-full select-none pointer-events-none
                   `}
-                  layout={`fill`}
-                  fetchPriority={`high`}
+                  fill
+                  priority
                   quality={100}
-                  loading={`eager`}
                 />
               </picture>
               <Countdown />
